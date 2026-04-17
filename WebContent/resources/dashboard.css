@@ -1,0 +1,49 @@
+/* style.css */
+:root {
+    --custom-blue: #012a5b;
+}
+
+body {
+    background-color: white;
+}
+
+.top-navbar {
+    background-color: var(--custom-blue) !important;
+    height: 60px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+.navbar
+{
+	background: #012a5b;
+}
+.sidebar {
+    width: 15%;
+    height: 100vh;
+    background-color: var(--custom-blue) !important;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    padding-top: 0px;
+}
+
+.sidebar a {
+    color: rgba(255, 255, 255, 0.8) !important;
+    text-decoration: none;
+    display: block;
+    padding: 15px 25px;
+}
+
+.sidebar a:hover, .sidebar a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white !important;
+}
+
+.main-content {
+    margin-left: 250px;
+    margin-top: 60px;
+    padding: 40px;
+    background-color: black;
+}

@@ -1,0 +1,412 @@
+  <div class="wrapper">
+    <form [formGroup]="cvForm" (ngSubmit)="onSubmit()">
+
+    <div class = "cv-container">
+      <div class = "form-input-section">
+    <div class = "left-side-bar">
+        <div class="image-information">
+               <div class="upload-container"
+               (click)="fileInput.click()"
+               (drop) = "onFileDropped($event)"
+               (dragover)="onDragOver($event)">
+               <input type="file" #fileInput (change)="onFileSelected($event)" hidden accept="image/*" >
+               <mat-icon color="primary">cloud_upload</mat-icon>    
+               <button *ngIf="imagePreview" 
+          mat-icon-button 
+          class="delete-btn" 
+          (click)="removeImage($event)"
+          matTooltip="Ukloni sliku">
+    <mat-icon>close</mat-icon>
+  </button>
+                <p *ngIf="!fileName">Prevucite sliku ovdje ili kliknite za odabir</p>
+                <p *ngIf="fileName" class="file-name">Odabrano:<strong>{{fileName}} </strong></p>
+            
+               <img *ngIf="imagePreview" [src]="imagePreview" class="preview-img">
+                </div> 
+        </div>
+            <div class = "name_surname_information"> 
+  <mat-form-field class="example-full-width">
+    <mat-label>Ime</mat-label>
+    <input matInput formControlName="firstName" >
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Prezime</mat-label>
+    <input matInput formControlName = "lastName">
+  </mat-form-field>
+
+   <mat-form-field class="example-full-width">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName = "email">
+  </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+    <mat-label>Broj telefona</mat-label>
+    <input matInput formControlName = "phoneNumber">
+  </mat-form-field>
+            </div>
+    </div>
+    
+    <div class = "right-content">
+    <mat-stepper orientation="vertical" [linear]="false" #stepper>
+    <mat-step>
+    <ng-template matStepLabel>Lične informacije</ng-template>
+    <div class="step-content">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>O meni</mat-label>
+            <textarea matInput formControlName="summary"
+             #summaryInput rows="4" 
+             maxlength="500"
+             placeholder="Kratak opis..."></textarea>
+
+             <mat-hint>
+              {{summaryInput.value?.length || 0 }}/500
+             </mat-hint>
+
+           
+          </mat-form-field>
+          <div class="single-button">
+            <button mat-flat-button matStepperNext  type="button" color="primary" class="pill-button">Dalje
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+    </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Vještine</ng-template>
+      <mat-form-field appearance="outline" class="example-full-width">
+      <mat-chip-grid #chipGrid aria-label="Skill section">
+        <mat-chip-row *ngFor="let skill of skillNames"
+          (removed)="ukloniVjestinu(skill)"> {{skill}}
+          <button matChipRemove [attr.aria-label]="'remove ' + skill">
+        <mat-icon>cancel</mat-icon>
+      </button>
+          </mat-chip-row>
+      </mat-chip-grid>
+      <input placeholder="Nova vjestina"
+      [matChipInputFor]="chipGrid"
+     [matChipInputSeparatorKeyCodes]="separatorKeysCodes",
+      (matChipInputTokenEnd)="dodajVjestinu($event)"/>
+      </mat-form-field>
+              <div class="stepper-actions">
+          <button mat-flat-button color="primary" class="pill-button" matStepperPrevious>
+          Nazad <mat-icon>chevron_left</mat-icon>
+          </button>
+         <button mat-flat-button color="primary" type="button" class="pill-button" matStepperNext>
+          Dalje <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Radno iskustvo</ng-template>
+        <div formArrayName="workExperiences">
+          <div *ngFor="let work of workExperiences.controls; let i=index" [formGroupName]="i" class="dynamic-item">
+         
+            <mat-form-field appearance="outline" class = "example-full-width">
+              <mat-label>Poslodavac</mat-label>
+              <input matInput formControlName="employer">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class = "example-full-width">
+              <mat-label>Pozicija</mat-label>
+              <input matInput formControlName="position">
+            </mat-form-field>
+               
+                <mat-form-field appearance="outline" class = "example-full-width">
+                <mat-label> Grad </mat-label>
+                <input matInput formControlName="city">
+                </mat-form-field>
+              
+                <mat-form-field appearance="outline" class = "example-full-width">
+                <mat-label>Period (npr. 2022 - Danas)</mat-label>
+                <input matInput formControlName="period">
+                </mat-form-field>
+            <button mat-button color="warn" type="button" class="pill-button" (click)="removeWorkExperience(i)">
+              Ukloni iskustvo
+            </button>
+            <hr>
+          </div>
+        </div>
+        <div class="add-action-container">
+        <button mat-stroked-button color="primary" type="button" class="pill-button" (click)="addWorkExperience()">
+          <mat-icon>add</mat-icon> Dodaj radno iskustvo
+        </button>
+        </div>
+
+        <div class="stepper-actions">
+          <button mat-flat-button color="primary" type="button" class="pill-button" matStepperNext>
+          Nazad <mat-icon>chevron_left</mat-icon>
+          </button>
+         <button mat-flat-button color="primary"  type="button" class="pill-button" matStepperNext>
+          Dalje <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Obrazovanje i osposobljavanje</ng-template>
+        <div formArrayName="educations">
+          <div *ngFor="let edu of educations.controls; let i=index" [formGroupName]="i" class="dynamic-item">
+            <div class="grid-container">
+            <mat-form-field appearance="outline">
+              <mat-label>Institucija</mat-label>
+              <input matInput formControlName="institution">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Zvanje</mat-label>
+              <input matInput formControlName="degree">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+            <mat-label> Smjer </mat-label>    
+            <input matInput formControlName="fieldOfStudy">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label> Period </mat-label>
+                <input matInput formControlName="period">
+            </mat-form-field>
+            <button mat-button color="warn" type="button" class="pill-button" (click)="removeEducation(i)">
+              Ukloni školu
+            </button>
+            <hr>
+            </div>
+          </div>
+        </div>
+
+        <button mat-stroked-button color="primary" type="button" class="pill-button" (click)="addEducation()">
+          + Dodaj obrazovanje
+        </button>
+
+        <div class="stepper-actions">
+          <button mat-flat-button color="primary" type="button" class="pill-button" matStepperPrevious>
+          Nazad <mat-icon>chevron_left</mat-icon>
+          </button>
+         <button mat-flat-button color="primary" type="button" class="pill-button" matStepperNext>
+          Dalje <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      </mat-step>
+
+       <mat-step>
+        <ng-template matStepLabel>Prakse</ng-template>
+        <div formArrayName="internships">
+          <div *ngFor="let intern of internships.controls; let i=index" [formGroupName]="i" class="dynamic-item">
+            <div class="grid-container">
+            <mat-form-field appearance="outline">
+              <mat-label>Naziv firme</mat-label>
+              <input matInput formControlName="companyName">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Pozicija</mat-label>
+              <input matInput formControlName="position">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+            <mat-label> Opis </mat-label>    
+            <input matInput formControlName="description">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label> Period </mat-label>
+                <input matInput formControlName="period">
+            </mat-form-field>
+            <button mat-button color="warn" type="button" class="pill-button" (click)="removeInternship(i)">
+              Ukloni školu
+            </button>
+            <hr>
+            </div>
+          </div>
+        </div>
+
+        <button mat-stroked-button color="primary" type="button" class="pill-button" (click)="addInternship()">
+          + Dodaj praksu
+        </button>
+
+        <div class="stepper-actions">
+          <button mat-flat-button color="primary" type="button" class="pill-button" matStepperPrevious>
+          Nazad <mat-icon>chevron_left</mat-icon>
+          </button>
+         <button mat-flat-button color="primary" type="button" class="pill-button" matStepperNext>
+          Dalje <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      </mat-step>
+
+
+      <mat-step>
+        <ng-template matStepLabel>Interesovanja</ng-template>
+        <div class="example-full-width">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Interesovanja</mat-label>
+                <textarea matInput formControlName="interests"></textarea>
+             </mat-form-field>
+        </div>
+                <div class="stepper-actions">
+          <button mat-flat-button color="primary" type="button" class="pill-button" matStepperPrevious>
+          Nazad <mat-icon>chevron_left</mat-icon>
+          </button>
+         <button mat-flat-button color="primary" type="button" class="pill-button" matStepperNext>
+          Dalje <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Završi</ng-template>
+        <div class="finish-screen">
+          <p>Provjerite sve unesene podatke prije nego što ih pošaljete u bazu.</p>
+        <div class="stepper-buttons">
+      <button mat-button matStepperPrevious type="button" class="back-btn">
+        <mat-icon>chevron_left</mat-icon> Nazad
+      </button>
+
+      <div class="action-buttons">
+        <button mat-raised-button 
+                [color]="isUpdateMode ? 'primary' : 'accent'" 
+                type="submit" 
+                class="save-btn">
+          <mat-icon>{{ isUpdateMode ? 'update' : 'save' }}</mat-icon>
+          {{ isUpdateMode ? 'AŽURIRAJ' : 'SAČUVAJ I KREIRAJ' }}
+        </button>
+
+        <button mat-flat-button color="warn" type="button" (click)="exportToPDF()" class="pdf-btn">
+          <mat-icon>picture_as_pdf</mat-icon> PDF EXPORT
+        </button>
+      </div>
+    </div>
+        </div>
+      </mat-step>
+    </mat-stepper>
+    </div>
+    </div>
+    
+
+    <div class = "form-output-section">
+
+<div class="a4-paper">
+
+           <div class="cv-main-container">
+            <div class="cv-left-col">
+                <div class="sidebar-header">
+                   <div class="profile-photo-wrapper">
+                  <img *ngIf="imagePreview" [src]="imagePreview" alt="Profile" class="profile-photo">
+                   <mat-icon *ngIf="!imagePreview" class="profile-icon-placeholder">person</mat-icon>
+                 </div>
+                </div>
+               <div class="sidebar-content">
+                <div class="sidebar-section">
+                <div class="section-header">
+            <h2> Lični podaci </h2>
+            <div class="line-separator"></div>
+               </div>
+               <div class="personal-info">
+                  <div class="info-row">
+                      <mat-icon>person</mat-icon>
+                    <span> {{cvForm.value.firstName}} {{cvForm.value.lastName}} </span>
+                  </div>
+                  <div class="info-row">
+                    <mat-icon>email</mat-icon>
+                    <span> {{cvForm.value.email}} </span>
+                  </div>
+
+                  <div class="info-row">
+                     <mat-icon>phone</mat-icon>
+                     <span> {{cvForm.value.phoneNumber}} </span>
+                  </div>
+               </div>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="section-header">
+            <h3>VJEŠTINE</h3>
+            <div class="line-separator"></div>
+        </div>
+        <ul class="skills-list">
+            <li *ngFor="let skill of skillNames">{{ skill }}</li>
+        </ul>
+    </div>
+</div>
+            </div>
+            <div class="cv-right-main-col">
+
+              <section class="main-section">
+              <div class="main-section-header">
+                 <h2>Kratki opis</h2>
+                <div class="main-line"></div>
+                 </div>
+                 <div class="summary-preview" style="white-space: pre-wrap; margin-bottom: 20px;">
+                    {{ cvForm.value.summary }}
+                 </div>
+               </section>
+              <section class="main-section">
+                <div class="main-section-header">
+                  <h2>Radno iskustvo</h2>
+                  <div class="main-line"></div>
+                </div>
+                <div *ngFor="let work of cvForm.value.workExperiences">
+                  <div class="item-header">
+                    <span class="item-title">{{work.position}}</span>
+                    <span class ="item-title">{{work.period}}</span>
+                  </div>
+                  <div class="item-sub">
+                    <span class="item-employer">{{ work.employer }}</span> 
+                    <span class="item-city">{{ work.city }}</span>
+                  </div>
+                </div>
+              </section>
+                <section class="main-section">
+                <div class="main-section-header">
+                  <h2>Obrazovanje</h2>
+                  <div class="main-line"></div>
+                </div>
+                <div *ngFor="let edu of cvForm.value.educations">
+                  <div class="item-header">
+                    <span class="item-title">{{edu.institution}}</span>
+                    <span class ="item-title">{{edu.period}}</span>
+                  </div>
+                  <div class="item-sub">
+                    <span class="item-employer">{{ edu.fieldOfStudy }}</span> 
+                    <span class="item-city">{{ edu.degree }}</span>
+                  </div>
+                </div>
+              </section>
+                <section class="main-section">
+                <div class="main-section-header">
+                  <h2>Prakse</h2>
+                  <div class="main-line"></div>
+                </div>
+                <div *ngFor="let intern of cvForm.value.internships">
+                  <div class="item-header">
+                    <span class="item-title">{{intern.companyName}}</span>
+                    <span class ="item-title">{{intern.period}}</span>
+                  </div>
+                  <div class="item-sub">
+                    <span class="item-employer">{{ intern.position }}</span> 
+                    <span class="item-city">{{ intern.degree }}</span>
+                  </div>
+                </div>
+              </section>
+              <section class="main-section" *ngIf="cvForm.value.interests">
+              <div class="main-section-header">
+              <h2>Interesovanja</h2>
+                <div class="main-line"></div>
+                </div>
+              <div class="interests-preview" style="white-space: pre-wrap;">
+                 {{ cvForm.value.interests }}
+               </div>
+              </section>
+            </div>
+       </div>
+ </div>
+
+        </div>
+</div>
+</form>
+</div>
+<button mat-fab color="primary" class="fab-export" (click)="exportToPDF()" matTooltip="Preuzmi PDF">
+  <mat-icon>picture_as_pdf</mat-icon>
+</button>

@@ -1,0 +1,43 @@
+<div class="internship-wrapper">
+    <div class="my-grid">
+<mat-card *ngFor="let p of internships" 
+          class="internship-card" 
+          [ngStyle]="{'border-top': '4px solid ' + (p.skillNames && p.skillNames.length > 0 ? getSkillColor(p.skillNames[0]) : '#757575')}">
+  
+   <div class="header-example">
+           <mat-card-header>
+   
+     
+    <mat-card-title>{{p.companyName}}</mat-card-title>
+  </mat-card-header>
+</div>
+  <mat-card-content>
+    <div class="date-info">
+    <mat-card-title> {{p.title}} </mat-card-title>
+    <p> 
+      <mat-icon class="tiny-icon">calendar_today</mat-icon>
+      <strong> Datum početka:</strong> {{p.startDate | date:'dd.MM.yyyy'}}
+    </p>
+    <p> 
+      <mat-icon class="tiny-icon">event_available</mat-icon>
+      <strong>Kraj:</strong> {{p.endDate | date: 'dd.MM.yyyy'}}
+    </p>
+    </div>
+  </mat-card-content>
+  <mat-card-footer class = "skills-footer">
+    <mat-chip-set aria-label=" Vještine:">
+     <mat-chip *ngFor="let skill of p.skillNames"
+                    [ngStyle]="{'background-color': getSkillColor(skill), 'color': 'white'}">
+            {{ skill }}
+          </mat-chip>
+    </mat-chip-set>
+  </mat-card-footer>
+<mat-card-actions>
+  <button  matFab extended color="primary" (click)="goToDnevnik(p.id)">
+    <mat-icon>edit_note</mat-icon>
+    Dnevnik rada
+  </button>
+</mat-card-actions>
+</mat-card>
+</div>
+</div>

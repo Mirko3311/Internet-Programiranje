@@ -1,0 +1,92 @@
+.actions-end {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 16px; 
+}
+.container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #012a5b; 
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 32px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+.recommendation-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+  display: flex;
+  flex-direction: column;
+  height: 100%; 
+}
+
+.score-avatar {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 50%;
+}
+
+.reason-box {
+  margin-top: 16px;
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #012a5b;
+}
+
+.reason-box p {
+  margin-top: 8px;
+  line-height: 1.5;
+  color: #444;
+}
+mat-card-content {
+  flex-grow: 1;
+}
+
+.simple-modern-btn {
+  color: #012a5b !important; 
+  border: 1.5px solid #012a5b !important;
+  border-radius: 8px !important; 
+  font-weight: 600 !important;
+  letter-spacing: 1px;
+  padding: 0 16px !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.simple-modern-btn:hover {
+  background-color: rgba(1, 42, 91, 0.05) !important;
+  transform: scale(1.02); 
+}
+
+.simple-modern-btn mat-icon {
+  margin-left: 4px;
+  vertical-align: middle;
+  font-size: 20px;
+}
+
+.actions-end {
+  padding: 12px 16px !important;
+  justify-content: flex-end;
+  display: flex;
+}

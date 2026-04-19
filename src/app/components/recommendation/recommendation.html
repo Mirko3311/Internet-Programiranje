@@ -1,0 +1,41 @@
+<div class="container">
+  <h2><mat-icon>psychology</mat-icon> AI Preporuke za Vas</h2>
+  <p class="subtitle">Na osnovu Vašeg CV-a, izdvojili smo najbolje prakse:</p>
+
+  <div *ngIf="isLoading" class="loading-spinner">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Gemini analizira Vaše vještine...</p>
+  </div>
+
+  <div *ngIf="!isLoading && recommendations.length > 0; else noData" class="cards-grid">
+    <mat-card *ngFor="let rec of recommendations" class="recommendation-card">
+      <mat-card-header>
+        <div mat-card-avatar class="score-avatar" [style.background-color]="getScoreColor(rec.score)">
+          {{ rec.score * 100 | number:'1.0-0' }}%
+        </div>
+        <mat-card-title>{{ rec.internshipTitle }}</mat-card-title>
+      
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="reason-box">
+          <strong>Zašto ovo preporučujemo?</strong>
+          <p>{{ rec.reason }}</p>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions class="actions-end">
+        <button class="simple-modern-btn" [routerLink]="['/dashboard/prakse', rec.internshipId]">
+          Pogledaj praksu
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <ng-template #noData>
+    <div class="no-data-msg" *ngIf="!isLoading">
+      <mat-icon>info</mat-icon>
+      <p>Trenutno nema preporuka. Provjerite da li ste popunili vaš CV u sekciji "Profil".</p>
+    </div>
+  </ng-template>
+</div>

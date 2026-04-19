@@ -1,0 +1,28 @@
+<div class="login-wrapper">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Studentske Prakse</mat-card-title>
+      <mat-card-subtitle>Prijava na sistem</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form (ngSubmit)="onLogin()">
+        
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Korisničko ime</mat-label>
+          <input matInput name="username" [(ngModel)]="loginData.username" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Lozinka</mat-label>
+          <input matInput type="password" name="password" [(ngModel)]="loginData.password" required>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" class="full-width">
+          Prijavi se
+        </button>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

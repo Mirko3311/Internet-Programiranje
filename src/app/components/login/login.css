@@ -1,0 +1,45 @@
+
+.login-wrapper
+{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Poppins', sans-serif;
+}
+
+.login-card
+{
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0  10px 30px rgba(0,0,0,0.2) !important;
+}
+mat-card-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+mat-card-subtitle {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Razmak između polja za unos */
+.full-width {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* Podešavanje dugmeta da prati stil */
+button {
+  margin-top: 10px;
+  padding: 10px 0 !important;
+  font-weight: 500 !important;
+  letter-spacing: 1px;
+}

@@ -1,0 +1,16 @@
+<div class="sidenav">
+    <div class="logo-container">
+    </div>
+    <mat-nav-list>
+        @for(item of items; track $index)
+        {
+          <a mat-list-item
+          [routerLink]="item.routeLink"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}">
+          <mat-icon matListItemIcon>{{ item.icon }} </mat-icon>
+          <span matListItemTitle>{{item.label}}</span>
+          </a>   
+        }
+    </mat-nav-list>
+</div>

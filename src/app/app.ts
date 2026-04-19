@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { LeftSideBar } from './components/left-side-bar/left-side-bar';
 
 @Component({
   selector: 'app-root',

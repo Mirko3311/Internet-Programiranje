@@ -1,0 +1,43 @@
+
+<div class="dnevnik-wrapper">
+  <div class="header-container">
+ <h1> Dnevnik rada </h1>
+  <button mat-raised-button color="primary" (click)="dodajNoviZapis()">
+   <mat-icon>add</mat-icon>Dodaj novi zapis  
+  </button>
+  </div>
+
+  <mat-accordion>
+  <mat-expansion-panel *ngFor="let z of zapisi" [expanded]="z.isEditing">
+   <mat-expansion-panel-header>
+    <mat-panel-title> Sedmica {{z.weekNumber}}
+    </mat-panel-title>
+    </mat-expansion-panel-header>  
+    <div class="panel-content">
+
+        
+        <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label> Sta ste radili ove sedmice?</mat-label>
+        <textarea matInput rows="4" [(ngModel)]="z.description" [disabled]="!z.isEditing"></textarea>
+        </mat-form-field>
+
+        <div class="action-row">
+        <ng-container *ngIf="z.isEditing">
+            <button mat-raised-button color="primary" (click)="spasiZapis(z)">
+                <mat-icon>save</mat-icon> Sacuvaj
+            </button>
+            <button mat-button color="warn" (click)="z.isEditing = false"> Otkazi </button>  
+        </ng-container>
+
+        <ng-container *ngIf="!z.isEditing && z.id">
+            <button mat-stroked-button color="accent" (click)="z.isEditing = true">
+           <mat-icon>edit</mat-icon> Izmijeni</button>
+       <button mat-button color="warn" (click)="obrisiZapis(z)">
+      <mat-icon>delete</mat-icon> Obriši
+    </button>
+            </ng-container>
+        </div>
+    </div>
+  </mat-expansion-panel>
+ </mat-accordion>
+</div>

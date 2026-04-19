@@ -1,0 +1,45 @@
+.sidenav {
+  background: #5079a9;
+  transition: all 0.5s ease;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  width: 16.5625rem;
+  height: 100vh;
+  padding: 16px 0;
+  margin-top: 60px;
+  border-radius: 10px;
+ 
+}
+.sidenav-collapsed {
+  width: 5rem;
+}
+mat-icon[matListItemIcon]
+{
+    color:#ffffff !important;
+}
+mat-list-item
+{
+    height: 56px !important;
+    margin:  8px 16px !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease;
+}
+[matListItemTitle]
+{
+    font-size: 18px !important;
+    color: #ffffff !important;
+    font-weight: 500;
+}
+
+mat-nav-list
+{
+    justify-content: center;
+    align-items: center;
+}
+
+ mat-list-item:hover
+ {
+    background: rgba(255,255,255,0.05);
+    cursor: pointer;
+ }

@@ -1,0 +1,98 @@
+<div *ngIf="praksa" class="details-page">
+  <mat-card class="details-card mat-elevation-z4">
+
+    <div class="details-hero">
+      <div class="hero-main">
+        <div class="title-block">
+          <span class="section-badge">Dostupna praksa</span>
+          <h1>{{ praksa.title }}</h1>
+
+          <div class="company-row">
+            <mat-icon>business</mat-icon>
+            <span>{{ praksa.companyName }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="details-content">
+
+      <div class="content-main">
+        <section class="info-card">
+          <div class="section-title">
+            <mat-icon>description</mat-icon>
+            <h3>Opis prakse</h3>
+          </div>
+
+          <p class="description-text">
+            {{ praksa.description }}
+          </p>
+        </section>
+
+        <section class="info-card">
+          <div class="section-title">
+            <mat-icon>psychology</mat-icon>
+            <h3>Potrebne vještine</h3>
+          </div>
+
+          <mat-chip-set class="skills-chip-set">
+            <mat-chip *ngFor="let skill of praksa.skillNames" class="skill-chip">
+              {{ skill }}
+            </mat-chip>
+          </mat-chip-set>
+        </section>
+      </div>
+
+      <aside class="content-sidebar">
+        <div class="sidebar-card">
+          <div class="sidebar-title">
+            <mat-icon>info</mat-icon>
+            <h3>Osnovne informacije</h3>
+          </div>
+
+          <div class="meta-list">
+            <div class="meta-item">
+              <mat-icon>event</mat-icon>
+              <div>
+                <span class="meta-label">Rok prijave</span>
+                <strong>{{ praksa.endDate | date:'dd.MM.yyyy.' }}</strong>
+              </div>
+            </div>
+
+            <div class="meta-item">
+              <mat-icon>location_on</mat-icon>
+              <div>
+                <span class="meta-label">Lokacija</span>
+                <strong>{{ praksa.location || 'Remote' }}</strong>
+              </div>
+            </div>
+
+            <div class="meta-item">
+              <mat-icon>apartment</mat-icon>
+              <div>
+                <span class="meta-label">Kompanija</span>
+                <strong>{{ praksa.companyName }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+
+<mat-card-actions class="action-section">
+  <button
+    mat-raised-button
+    color="primary"
+    class="apply-btn-small"
+    (click)="prijaviSe(praksa.id)"
+  >
+    <mat-icon>send</mat-icon>
+    Prijavi se
+  </button>
+</mat-card-actions>
+
+
+
+  </mat-card>
+</div>
